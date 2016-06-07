@@ -1,17 +1,17 @@
-var gulp = require('gulp')
-var gutil = require('gulp-util')
-var uglify = require('gulp-uglify')
-var watchPath = require('gulp-watch-path')
-var combiner = require('stream-combiner2')
-var sourcemaps = require('gulp-sourcemaps')
-var cleanCSS = require('gulp-clean-css');
-var autoprefixer = require('gulp-autoprefixer')
-var babel = require("gulp-babel");
-var stylus = require('gulp-stylus')
-var imagemin = require('gulp-imagemin')
+import gulp from 'gulp'
+import gutil from 'gulp-util'
+import uglify from 'gulp-uglify'
+import watchPath from 'gulp-watch-path'
+import combiner from 'stream-combiner2'
+import sourcemaps from 'gulp-sourcemaps'
+import cleanCSS from 'gulp-clean-css'
+import autoprefixer from 'gulp-autoprefixer'
+import babel from 'gulp-babel'
+import stylus from 'gulp-stylus'
+import imagemin from 'gulp-imagemin'
 
-var handleError = function (err) {
-    var colors = gutil.colors;
+let handleError = function (err) {
+    let colors = gutil.colors;
     console.log('\n')
     gutil.log(colors.red('Error!'))
     gutil.log('fileName: ' + colors.red(err.fileName))
@@ -22,12 +22,12 @@ var handleError = function (err) {
 
 gulp.task('watchjs', function () {
     gulp.watch('src/js/**/*.js', function (event) {
-        var paths = watchPath(event, 'src/', 'dist/')
+        let paths = watchPath(event, 'src/', 'dist/')
 
         gutil.log(gutil.colors.green(event.type) + ' ' + paths.srcPath)
         gutil.log('Dist ' + paths.distPath)
 
-        var combined = combiner.obj([
+        let combined = combiner.obj([
             gulp.src(paths.srcPath),
             babel(),
             sourcemaps.init(),
@@ -41,7 +41,7 @@ gulp.task('watchjs', function () {
 })
 
 gulp.task('uglifyjs', function () {
-    var combined = combiner.obj([
+    let combined = combiner.obj([
         gulp.src('src/js/**/*.js'),
         sourcemaps.init(),
         uglify(),
@@ -54,7 +54,7 @@ gulp.task('uglifyjs', function () {
 
 gulp.task('watchcss', function () {
     gulp.watch('src/css/**/*.css', function (event) {
-        var paths = watchPath(event, 'src/', 'dist/')
+        let paths = watchPath(event, 'src/', 'dist/')
 
         gutil.log(gutil.colors.green(event.type) + ' ' + paths.srcPath)
         gutil.log('Dist ' + paths.distPath)
@@ -83,17 +83,17 @@ gulp.task('cleanCSS', function () {
 
 gulp.task('watchstylus',function () {
     gulp.watch('src/stylus/**/*', function (event) {
-        var paths = watchPath(event, 'src/stylus/', 'dist/css/')
+        let paths = watchPath(event, 'src/stylus/', 'dist/css/')
 
         gutil.log(gutil.colors.green(event.type) + ' ' + paths.srcPath)
         gutil.log('Dist ' + paths.distPath)
         
-        var combined = combiner.obj([
+        let combined = combiner.obj([
             gulp.src(paths.srcPath),
             stylus(),
             sourcemaps.init(),
             autoprefixer({
-              browsers: 'last 2 versions'
+              browsers: 'last 5 versions'
             }),
             cleanCSS(),
             sourcemaps.write('./'),
@@ -111,7 +111,7 @@ gulp.task('styluscss', function () {
         .pipe(stylus())
         .pipe(sourcemaps.init())
         .pipe(autoprefixer({
-          browsers: 'last 2 versions'
+          browsers: 'last 5 versions'
         }))
         .pipe(cleanCSS())
         .pipe(sourcemaps.write('./'))
@@ -121,11 +121,11 @@ gulp.task('styluscss', function () {
 
 gulp.task('watchless', function () {
     gulp.watch('src/less/**/*.less', function (event) {
-        var paths = watchPath(event, 'src/less/', 'dist/css/')
+        let paths = watchPath(event, 'src/less/', 'dist/css/')
 
         gutil.log(gutil.colors.green(event.type) + ' ' + paths.srcPath)
         gutil.log('Dist ' + paths.distPath)
-        var combined = combiner.obj([
+        let combined = combiner.obj([
             gulp.src(paths.srcPath),
             sourcemaps.init(),
             autoprefixer({
@@ -141,7 +141,7 @@ gulp.task('watchless', function () {
 })
 
 gulp.task('lesscss', function () {
-    var combined = combiner.obj([
+    let combined = combiner.obj([
         gulp.src('src/less/**/*.less'),
         sourcemaps.init(),
         autoprefixer({
@@ -158,7 +158,7 @@ gulp.task('lesscss', function () {
 
 gulp.task('watchsass',function () {
     gulp.watch('src/sass/**/*', function (event) {
-        var paths = watchPath(event, 'src/sass/', 'dist/css/')
+        let paths = watchPath(event, 'src/sass/', 'dist/css/')
 
         gutil.log(gutil.colors.green(event.type) + ' ' + paths.srcPath)
         gutil.log('Dist ' + paths.distPath)
@@ -192,7 +192,7 @@ gulp.task('sasscss', function () {
 
 gulp.task('watchimage', function () {
     gulp.watch('src/img/**/*', function (event) {
-        var paths = watchPath(event,'src/','dist/')
+        let paths = watchPath(event,'src/','dist/')
 
         gutil.log(gutil.colors.green(event.type) + ' ' + paths.srcPath)
         gutil.log('Dist ' + paths.distPath)
@@ -215,7 +215,7 @@ gulp.task('image', function () {
 
 gulp.task('watchcopy', function () {
     gulp.watch('src/fonts/**/*', function (event) {
-        var paths = watchPath(event,'src/', 'dist/')
+        let paths = watchPath(event,'src/', 'dist/')
 
         gutil.log(gutil.colors.green(event.type) + ' ' + paths.srcPath)
         gutil.log('Dist ' + paths.distPath)
